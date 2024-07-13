@@ -1,6 +1,12 @@
 <template>
   <div class="list">
-    <ProductCard v-for="product in products" :key="product.id" :card="product" class="list-item" />
+    <ProductCard
+      v-for="product in products"
+      :key="product.id"
+      :card="product"
+      @addToCart="productStore.addProduct(product)"
+      class="list-item"
+    />
   </div>
 </template>
 
@@ -8,6 +14,10 @@
 import ProductCard from '@/components/Cards/ProductCard.vue'
 
 import { Product } from '@/domain/Product'
+
+import { useProductStore } from '@/stores/ProductStore'
+
+const productStore = useProductStore()
 
 defineProps<{
   products: Product[]

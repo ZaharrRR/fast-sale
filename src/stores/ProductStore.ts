@@ -3,7 +3,8 @@ import { defineStore } from 'pinia'
 import { Product } from '@/domain/Product'
 
 interface State {
-  products: Product[] | []
+  products: Product[]
+  cartProducts: Product[]
 }
 
 export const useProductStore = defineStore('productStore', {
@@ -14,6 +15,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Штаны y2k широкие парашюты оверсайз у2к',
         description: '',
         price: 1770,
+        amount: 1,
         rating: 4.6,
         brand: 'NeoNostalgia',
         imageUrl:
@@ -24,6 +26,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Кроссовки New Balance 990',
         description: '',
         price: 2945,
+        amount: 1,
         rating: 4.5,
         brand: 'New Balance',
         imageUrl:
@@ -34,6 +37,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Track',
         description: '',
         price: 7047,
+        amount: 1,
         rating: 4.8,
         brand: 'Balenciaga',
         imageUrl:
@@ -44,6 +48,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Ветровка мужская олимпийка y2k ретро 90х',
         description: '',
         price: 2079,
+        amount: 1,
         rating: 4.5,
         brand: 'Fase-OFF',
         imageUrl:
@@ -54,6 +59,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Штаны y2k широкие парашюты оверсайз у2к',
         description: '',
         price: 1770,
+        amount: 1,
         rating: 4.6,
         brand: 'NeoNostalgia',
         imageUrl:
@@ -64,6 +70,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Кроссовки New Balance 990',
         description: '',
         price: 2945,
+        amount: 1,
         rating: 4.5,
         brand: 'New Balance',
         imageUrl:
@@ -74,6 +81,7 @@ export const useProductStore = defineStore('productStore', {
         name: 'Track',
         description: '',
         price: 7047,
+        amount: 1,
         rating: 4.8,
         brand: 'Balenciaga',
         imageUrl:
@@ -84,17 +92,41 @@ export const useProductStore = defineStore('productStore', {
         name: 'Ветровка мужская олимпийка y2k ретро 90х',
         description: '',
         price: 2079,
+        amount: 1,
         rating: 4.5,
         brand: 'Fase-OFF',
         imageUrl:
           'https://basket-12.wbbasket.ru/vol1818/part181859/181859108/images/c516x688/1.webp'
       }
-    ]
+    ],
+    cartProducts: []
   }),
 
   getters: {
     getProducts: (state) => state.products
   },
 
-  actions: {}
+  actions: {
+    addProduct(product: Product) {
+      const currentProduct = this.products.find((item) => item.id === product.id)
+      if (currentProduct) {
+        currentProduct.isAdded = true
+        this.cartProducts.push(product)
+      }
+    },
+
+    increaseAmount(product: Product) {
+      const currentProduct = this.products.find((item) => item.id === product.id)
+      if (currentProduct) {
+        currentProduct.amount++
+      }
+    },
+
+    decreaseAmount(product: Product) {
+      const currentProduct = this.products.find((item) => item.id === product.id)
+      if (currentProduct) {
+        currentProduct.amount--
+      }
+    }
+  }
 })

@@ -12,9 +12,13 @@
         <span>{{ card.rating }}</span>
       </div>
 
-      <button class="info-btn">
+      <button v-if="!card.isAdded" @click="$emit('addToCart', card)" class="info-btn">
         <img src="/icons/cart.svg" />
         <span>Послезавтра</span>
+      </button>
+
+      <button v-else class="info-btn">
+        <span>уже в корзине</span>
       </button>
     </div>
   </div>
